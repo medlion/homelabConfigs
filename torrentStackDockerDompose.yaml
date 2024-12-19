@@ -8,9 +8,9 @@ services:
       - PGID=0
       - TZ=Africa/Johannesburg
     volumes:
-      - /media/erick/Expansion/Docker config/transmission:/config
-      - /media/erick/Expansion/Transmission/downloads:/downloads
-      - /media/erick/Expansion/Transmission/watch:/watch
+      - /mnt/yolosolo/configs/transmission:/config
+      - /mnt/yolosolo/downloads:/downloads
+      - /mnt/yolosolo/watch/watch:/watch
     ports:
       - 9091:9091
       - 51413:51413
@@ -25,9 +25,9 @@ services:
       - PGID=0
       - TZ=Africa/Johannesburg
     volumes:
-      - /media/erick/Expansion/Docker config/sonarr:/config
-      - /media/erick/Expansion/Series:/tv #optional
-      - /media/erick/Expansion/Transmission/downloads:/downloads #optional
+      - /mnt/yolosolo/configs/sonarr:/config
+      - /mnt/yolosolo/rasptemp/series:/tv #optional
+      - /mnt/yolosolo/downloads:/downloads #optional
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -40,9 +40,9 @@ services:
       - PGID=0
       - TZ=Africa/Johannesburg
     volumes:
-      - /media/erick/Expansion/Docker config/radarr:/config
-      - /media/erick/Expansion/Movies:/tv #optional
-      - /media/erick/Expansion/Transmission/downloads:/downloads #optional
+      - /mnt/yolosolo/configs/radarr:/config
+      - /mnt/yolosolo/rasptemp/movies:/movies #optional
+      - /mnt/yolosolo/downloads:/downloads #optional
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -55,7 +55,7 @@ services:
       - PGID=0
       - TZ=Africa/Johannesburg
     volumes:
-      - /media/erick/Expansion/Docker config/prowlarr/:/config
+      - /mnt/yolosolo/configs/prowlarr/:/config
     ports:
       - 9696:9696
     restart: unless-stopped
@@ -68,9 +68,9 @@ services:
       - PGID=0
       - TZ=Africa/Johannesburg
     volumes:
-      - /media/erick/Expansion/Docker config/bazarr:/config
-      - /media/erick/Expansion/Movies:/movies #optional
-      - /media/erick/Expansion/Series:/tv #optional
+      - /mnt/yolosolo/configs/bazarr:/config
+      - /mnt/yolosolo/rasptemp/movies:/movies #optional
+      - /mnt/yolosolo/rasptemp/series:/tv #optional
     ports:
       - 6767:6767
     restart: unless-stopped
