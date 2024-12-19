@@ -1,0 +1,92 @@
+version: "2.1"
+services:
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Africa/Johannesburg
+    volumes:
+      - /media/erick/Expansion/Docker config/transmission:/config
+      - /media/erick/Expansion/Transmission/downloads:/downloads
+      - /media/erick/Expansion/Transmission/watch:/watch
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
+
+  sonarr:
+    image: linuxserver/sonarr
+
+    container_name: sonarr
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Africa/Johannesburg
+    volumes:
+      - /media/erick/Expansion/Docker config/sonarr:/config
+      - /media/erick/Expansion/Series:/tv #optional
+      - /media/erick/Expansion/Transmission/downloads:/downloads #optional
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Africa/Johannesburg
+    volumes:
+      - /media/erick/Expansion/Docker config/radarr:/config
+      - /media/erick/Expansion/Movies:/tv #optional
+      - /media/erick/Expansion/Transmission/downloads:/downloads #optional
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+  prowlarr:
+    image: linuxserver/prowlarr
+    container_name: prowlarr
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Africa/Johannesburg
+    volumes:
+      - /media/erick/Expansion/Docker config/prowlarr/:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+
+  lidarr:
+    image: linuxserver/lidarr
+    container_name: lidarr
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Africa/Johannesburg
+    volumes:
+      - /media/erick/Expansion/Docker config/lidarr:/config
+      - /media/erick/Expansion/Music:/music #optional
+      - /media/erick/Expansion/Transmission/downloads:/downloads #optional
+    ports:
+      - 8686:8686
+    restart: unless-stopped
+
+  bazarr:
+    image: linuxserver/bazarr
+    container_name: bazarr
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Africa/Johannesburg
+    volumes:
+      - /media/erick/Expansion/Docker config/bazarr:/config
+      - /media/erick/Expansion/Movies:/movies #optional
+      - /media/erick/Expansion/Series:/tv #optional
+    ports:
+      - 6767:6767
+    restart: unless-stopped
