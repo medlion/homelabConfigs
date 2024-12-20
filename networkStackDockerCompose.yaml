@@ -1,0 +1,12 @@
+version: "3.6"
+
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    ports:
+      - 53:53/tcp # plain dns over tcp
+      - 53:53/udp # plain dns over udp
+      - 3000:3000/tcp # initial setup web interface
+    volumes:
+      - /mnt/yolosolo/configs/adguard/conf:/opt/adguardhome/conf # app configuration
+      - /mnt/yolosolo/configs/adguard/work:/opt/adguardhome/work # app working directory
