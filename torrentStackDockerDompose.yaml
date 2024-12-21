@@ -16,6 +16,10 @@ services:
       - 51413:51413
       - 51413:51413/udp
     restart: unless-stopped
+    labels:
+      - "easyhaproxy.http.host=transmission.rasppi.firewood"
+      - "easyhaproxy.http.port=80"
+      - "easyhaproxy.http.localport=9091"
 
   sonarr:
     image: linuxserver/sonarr
@@ -31,6 +35,10 @@ services:
     ports:
       - 8989:8989
     restart: unless-stopped
+    labels:
+      - "easyhaproxy.http.host=sonarr.rasppi.firewood"
+      - "easyhaproxy.http.port=80"
+      - "easyhaproxy.http.localport=8989"
 
   radarr:
     image: linuxserver/radarr
@@ -46,6 +54,10 @@ services:
     ports:
       - 7878:7878
     restart: unless-stopped
+    labels:
+      - "easyhaproxy.http.host=radarr.rasppi.firewood"
+      - "easyhaproxy.http.port=80"
+      - "easyhaproxy.http.localport=7878"
 
   prowlarr:
     image: linuxserver/prowlarr
@@ -59,6 +71,10 @@ services:
     ports:
       - 9696:9696
     restart: unless-stopped
+    labels:
+      - "easyhaproxy.http.host=prowlarr.rasppi.firewood"
+      - "easyhaproxy.http.port=80"
+      - "easyhaproxy.http.localport=9696"
 
   bazarr:
     image: linuxserver/bazarr
@@ -73,4 +89,8 @@ services:
       - /mnt/yolosolo/rasptemp/series:/tv #optional
     ports:
       - 6767:6767
-    restart: unless-stopped
+    restart: unless-stopped
+    labels:
+      - "easyhaproxy.http.host=bazarr.rasppi.firewood"
+      - "easyhaproxy.http.port=80"
+      - "easyhaproxy.http.localport=6767"

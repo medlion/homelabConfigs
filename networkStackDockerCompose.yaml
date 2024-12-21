@@ -1,5 +1,3 @@
-version: "3.6"
-
 services:
   adguardhome:
     image: adguard/adguardhome
@@ -10,3 +8,22 @@ services:
     volumes:
       - /mnt/yolosolo/configs/adguard/conf:/opt/adguardhome/conf # app configuration
       - /mnt/yolosolo/configs/adguard/work:/opt/adguardhome/work # app working directory
+    labels:
+      - "easyhaproxy.http.host=adguard.rasppi.firewood"
+      - "easyhaproxy.http.port=80"
+      - "easyhaproxy.http.localport=3000"
+
+  easy-haproxy:
+    image: byjg/easy-haproxy
+    ports:
+      - 80:80
+      - 443:443
+      - 1936:1936
+    environment:
+      - EASYHAPROXY_DISCOVER=docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "easyhaproxy.http.host=haproxy.rasppi.firewood"
+      - "easyhaproxy.http.port=80"
+      - "easyhaproxy.http.localport=1936"
