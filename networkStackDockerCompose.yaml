@@ -8,6 +8,7 @@ services:
     volumes:
       - /mnt/yolosolo/configs/adguard/conf:/opt/adguardhome/conf # app configuration
       - /mnt/yolosolo/configs/adguard/work:/opt/adguardhome/work # app working directory
+    restart: unless-stopped
     labels:
       - "easyhaproxy.http.host=adguard.rasppi.firewood"
       - "easyhaproxy.http.port=80"
@@ -23,6 +24,7 @@ services:
       - EASYHAPROXY_DISCOVER=docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
     labels:
       - "easyhaproxy.http.host=haproxy.rasppi.firewood"
       - "easyhaproxy.http.port=80"
