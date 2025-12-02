@@ -1,0 +1,34 @@
+version: "3.6"
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    ports:
+      - 53:53/tcp # plain dns over tcp
+      - 53:53/udp # plain dns over udp
+      - 3000:3000/tcp # initial setup web interface
+    volumes:
+      - /mnt/yolosolo/configs/adguard/conf:/opt/adguardhome/conf
+      - /mnt/yolosolo/configs/adguard/work:/opt/adguardhome/work
+    restart: unless-stopped
+    labels:
+      easyhaproxy.http.host: "adguard.rasppi.firewood"
+      easyhaproxy.http.localport: "3000"
+
+  easy-haproxy:
+    image: byjg/easy-haproxy
+    container_name: easy-haproxy
+    ports:
+      - 80:80
+      - 1936:1936
+    environment:
+      - EASYHAPROXY_DISCOVER=docker
+      #- HAPROXY_CUSTOMERRORS=true
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      #- /mnt/yolosolo/configs/haproxy:/etc/haproxy/conf.d
+      - /mnt/yolosolo/configs/haproxy/errors:/etc/haproxy/errors-custom/
+    labels:
+      easyhaproxy.http.host: "haproxy.rasppi.firewood"
+      easyhaproxy.http.localport: "1936"

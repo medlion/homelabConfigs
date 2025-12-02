@@ -1,0 +1,114 @@
+services:
+  openvpn-client:
+    image: medlion/openvpn-client
+    container_name: openvpn-client
+    ports:
+      - 9091:9091 #transmission-webui
+      - 51413:51413 #transmission
+      - 51413:51413/udp #transmission
+      - 9696:9696 #prowlarr
+      - 8191:8191 #flaresolverr
+      - 6767:6767 #bazarr
+      - 7878:7878 #radarr
+      - 8989:8989 #sonarr
+    volumes:
+      - /mnt/yolosolo/configs/openvpn/config:/config
+    cap_add: 
+      - NET_ADMIN
+    privileged: true
+    restart: unless-stopped
+        
+  transmission:
+    cpus: 2
+    image: linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Africa/Johannesburg
+    volumes:
+      - /mnt/yolosolo/configs/transmission:/config
+      - /mnt/yolosolo/downloads:/downloads
+      - /mnt/yolosolo/watch/watch:/watch
+    restart: unless-stopped
+    network_mode: service:openvpn-client
+    depends_on: 
+      - prowlarr
+
+  sonarr:
+    image: linuxserver/sonarr
+    container_name: sonarr
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Africa/Johannesburg
+    volumes:
+      - /mnt/yolosolo/configs/sonarr:/config
+      - /mnt/orcsstrongtogether/media/series:/tv #optional
+      - /mnt/orcsstrongtogether/media/series18:/tv18
+      - /mnt/yolosolo/downloads:/downloads #optional
+        #ports:
+        #- 8989:8989
+    network_mode: service:openvpn-client
+    depends_on:
+      - prowlarr
+    restart: unless-stopped
+
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Africa/Johannesburg
+    volumes:
+      - /mnt/yolosolo/configs/radarr:/config
+      - /mnt/orcsstrongtogether/media/movies:/movies #optional
+      - /mnt/orcsstrongtogether/media/movies18:/movies18
+      - /mnt/yolosolo/downloads:/downloads #optional
+        #ports:
+        #- 7878:7878
+    network_mode: service:openvpn-client
+    depends_on:
+      - prowlarr
+    restart: unless-stopped
+
+  prowlarr:
+    image: linuxserver/prowlarr
+    container_name: prowlarr
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Africa/Johannesburg
+    volumes:
+      - /mnt/yolosolo/configs/prowlarr/:/config
+    #ports:
+      #- 9696:9696
+    network_mode: service:openvpn-client
+    restart: unless-stopped
+
+  bazarr:
+    image: linuxserver/bazarr
+    container_name: bazarr
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Africa/Johannesburg
+    volumes:
+      - /mnt/yolosolo/configs/bazarr:/config
+      - /mnt/orcsstrongtogether/media/movies:/movies #optional
+      - /mnt/orcsstrongtogether/media/series:/tv #optional
+      #ports:
+        #- 6767:6767
+    network_mode: service:openvpn-client
+    depends_on:
+      - prowlarr
+    restart: unless-stopped
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr
+    container_name: flaresolverr
+      #ports:
+      #- 8191:8191
+    network_mode: service:openvpn-client
+    restart: unless-stopped

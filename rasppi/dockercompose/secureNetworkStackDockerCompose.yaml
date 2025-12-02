@@ -1,0 +1,14 @@
+services:
+
+  haproxy:
+    image: haproxy
+    container_name: haproxy
+    ports:
+      - 80:80
+      - 443:443
+      - 8888:8888
+    restart: unless-stopped
+    volumes:
+      - "/mnt/yolosolo/configs/haproxy/configs/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
+      - "/mnt/yolosolo/configs/haproxy/errors:/usr/local/etc/haproxy/errors"
+      - "/mnt/yolosolo/letsencrypt/docker-mount/haproxy.pem:/usr/local/etc/haproxy/certs/fullchain.pem"

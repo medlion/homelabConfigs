@@ -1,0 +1,11 @@
+services:
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - "/mnt/yolosolo/letsencrypt:/etc/letsencrypt"
+        #command: certonly --manual --email bernard+letsencrypt@vanwyngaard.co.za --debug-challenges --preferred-challenges dns -d *.home.bvwyngaard.co.za
+        #command: certonly --manual -d *.home.bvwyngaard.co.za
+    entrypoint : sh
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
