@@ -1,0 +1,4 @@
+LABEL=writable	/	ext4	defaults	0	1
+LABEL=system-boot	/boot/firmware	vfat	defaults	0	1
+UUID=d5c7b60e-6c5c-4885-a43e-6e0f3101fe64	/mnt/yolosolo	ext4	defaults,nofail	0	2
+192.168.88.4:/mnt/orcsstrongtogether/share	/mnt/orcsstrongtogether	nfs	auto,nofail,noatime,nolock,intr,tcp,actimeo=1800	0	0
